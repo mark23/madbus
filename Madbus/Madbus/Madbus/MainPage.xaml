@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Madbus.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Madbus"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:common="using:Madbus.Common">
+    <Page.DataContext>
+        <local:MainPageViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <common:MenuItemTemplateSelector x:Key="selector">
+            <common:MenuItemTemplateSelector.ItemTemplate>
+                <DataTemplate x:DataType="common:Category">
+                    <NavigationViewItem Content="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind Tooltip}">
+                        <NavigationViewItem.Icon>
+                            <!--<SymbolIcon Symbol="{x:Bind Glyph}"/>-->
+                            <FontIcon Glyph="{x:Bind Glyph}"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </DataTemplate>
+            </common:MenuItemTemplateSelector.ItemTemplate>
+        </common:MenuItemTemplateSelector>
+    </Page.Resources>
+    
+    <NavigationView x:Name="MainNavigation" IsSettingsVisible="False" 
+                    IsBackEnabled="False" IsBackButtonVisible="Collapsed"
+                    MenuItemTemplateSelector="{StaticResource selector}"
+                    MenuItemsSource="{Binding Categories, Mode=OneWay}"
+                    PaneTitle="{Binding Title}">
+    </NavigationView>
+</Page>
